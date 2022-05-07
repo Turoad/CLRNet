@@ -53,6 +53,10 @@ class CULane(BaseDataset):
             for line in list_file:
                 infos = self.load_annotation(line.split())
                 self.data_infos.append(infos)
+        
+        # cache data infos to file
+        with open(cache_path, 'wb') as cache_file:
+            pkl.dump(self.data_infos, cache_file)
 
     def load_annotation(self, line):
         infos = {}
