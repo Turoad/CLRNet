@@ -123,22 +123,9 @@ class CULane(BaseDataset):
             os.makedirs(output_dir, exist_ok=True)
             output = self.get_prediction_string(pred)
 
-            # store loss lines
-            lanes = self.data_infos[idx]['lanes']
-            if len(lanes) - len(pred) in [1, 2, 3, 4]:
-                loss_lines[len(lanes) - len(pred) - 1].append(
-                    self.data_infos[idx]['img_name'])
-
             with open(os.path.join(output_dir, output_filename),
                       'w') as out_file:
                 out_file.write(output)
-
-        for i, names in enumerate(loss_lines):
-            with open(
-                    os.path.join(output_basedir,
-                                 'loss_{}_lines.txt'.format(i + 1)), 'w') as f:
-                for name in names:
-                    f.write(name + '\n')
 
         for cate, cate_file in CATEGORYS.items():
             result = culane_metric.eval_predictions(output_basedir,

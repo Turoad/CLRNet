@@ -69,58 +69,6 @@ def interp(points, n=50):
 def culane_metric(pred,
                   anno,
                   width=30,
-                  iou_threshold=0.5,
-                  official=True,
-                  img_shape=(590, 1640, 3)):
-    _metric = {}
-    for thr in range(50, 100, 5):
-        tp = 0
-        fp = 0 if len(anno) != 0 else len(pred)
-        fn = 0 if len(pred) != 0 else len(anno)
-        _metric[thr] = [tp, fp, fn]
-
-    if len(pred) == 0:
-        return 0, 0, len(anno), np.zeros(len(pred)), np.zeros(
-            len(pred), dtype=bool), _metric
-    if len(anno) == 0:
-        return 0, len(pred), 0, np.zeros(len(pred)), np.zeros(
-            len(pred), dtype=bool), _metric
-    interp_pred = np.array([interp(pred_lane, n=5) for pred_lane in pred],
-                           dtype=object)  # (4, 50, 2)
-    interp_anno = np.array([interp(anno_lane, n=5) for anno_lane in anno],
-                           dtype=object)  # (4, 50, 2)
-
-    if official:
-        ious = discrete_cross_iou(interp_pred,
-                                  interp_anno,
-                                  width=width,
-                                  img_shape=img_shape)
-    else:
-        ious = continuous_cross_iou(interp_pred,
-                                    interp_anno,
-                                    width=width,
-                                    img_shape=img_shape)
-
-    row_ind, col_ind = linear_sum_assignment(1 - ious)
-
-    _metric = {}
-    for thr in range(50, 100, 5):
-        tp = int((ious[row_ind, col_ind] > thr / 100.).sum())
-        fp = len(pred) - tp
-        fn = len(anno) - tp
-        _metric[thr] = [tp, fp, fn]
-
-    tp = int((ious[row_ind, col_ind] > iou_threshold).sum())
-    fp = len(pred) - tp
-    fn = len(anno) - tp
-    pred_ious = np.zeros(len(pred))
-    pred_ious[row_ind] = ious[row_ind, col_ind]
-
-    return tp, fp, fn, pred_ious, pred_ious > iou_threshold, _metric
-
-def culane_metric_v2(pred,
-                  anno,
-                  width=30,
                   iou_thresholds=[0.5],
                   official=True,
                   img_shape=(590, 1640, 3)):
@@ -200,7 +148,7 @@ def eval_predictions(pred_dir,
     img_shape = (590, 1640, 3)
     if sequential:
         results = map(
-            partial(culane_metric_v2,
+            partial(culane_metric,
                     width=width,
                     official=official,
                     iou_thresholds=iou_thresholds,
@@ -209,7 +157,7 @@ def eval_predictions(pred_dir,
         from multiprocessing import Pool, cpu_count
         from itertools import repeat
         with Pool(cpu_count()) as p:
-            results = p.starmap(culane_metric_v2, zip(predictions, annotations,
+            results = p.starmap(culane_metric, zip(predictions, annotations,
                         repeat(width),
                         repeat(iou_thresholds),
                         repeat(official),

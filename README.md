@@ -3,7 +3,10 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/clrnet-cross-layer-refinement-network-for/lane-detection-on-culane)](https://paperswithcode.com/sota/lane-detection-on-culane?p=clrnet-cross-layer-refinement-network-for)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/clrnet-cross-layer-refinement-network-for/lane-detection-on-llamas)](https://paperswithcode.com/sota/lane-detection-on-llamas?p=clrnet-cross-layer-refinement-network-for)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/clrnet-cross-layer-refinement-network-for/lane-detection-on-tusimple)](https://paperswithcode.com/sota/lane-detection-on-tusimple?p=clrnet-cross-layer-refinement-network-for)
+
+
 </div>
+
 
 <div align="center">
 
@@ -74,12 +77,6 @@ For CULane, you should have structure like this:
 $CULANEROOT/driver_xx_xxframe    # data folders x6
 $CULANEROOT/laneseg_label_w16    # lane segmentation labels
 $CULANEROOT/list                 # data lists
-```
-Compile the evaluation tools:
-
-```
-cd $CLRNET_ROOT/tools/lane_evaluation
-make
 ```
 
 
@@ -192,10 +189,23 @@ We will get the visualization result in `work_dirs/xxx/xxx/visualization`.
 
 If our paper and code are beneficial to your work, please consider citing:
 ```
-@inproceedings{zheng2022clrnet,
-  title={CLRNet: Cross Layer Refinement Network for Lane Detection},
-  author={Zheng, Tu and Huang, Yifei and Liu, Yang and Tang, Wenjian and Yang, Zheng and Cai, Deng and He, Xiaofei},
-  booktitle={Conference on Computer Vision and Pattern Recognition (CVPR)},
-  year={2022}
+@InProceedings{Zheng_2022_CVPR,
+    author    = {Zheng, Tu and Huang, Yifei and Liu, Yang and Tang, Wenjian and Yang, Zheng and Cai, Deng and He, Xiaofei},
+    title     = {CLRNet: Cross Layer Refinement Network for Lane Detection},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2022},
+    pages     = {898-907}
 }
 ```
+
+## Acknowledgement
+<!--ts-->
+* [open-mmlab/mmdetection](https://github.com/open-mmlab/mmdetection)
+* [pytorch/vision](https://github.com/pytorch/vision)
+* [Turoad/lanedet](https://github.com/Turoad/lanedet)
+* [ZJULearning/resa](https://github.com/ZJULearning/resa)
+* [cfzd/Ultra-Fast-Lane-Detection](https://github.com/cfzd/Ultra-Fast-Lane-Detection)
+* [lucastabelini/LaneATT](https://github.com/lucastabelini/LaneATT)
+* [aliyun/conditional-lane-detection](https://github.com/aliyun/conditional-lane-detection)
+<!--te-->
