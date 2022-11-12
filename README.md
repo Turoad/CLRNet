@@ -60,6 +60,33 @@ pip install torch==1.8.0 torchvision==0.9.0
 python setup.py build develop
 ```
 
+### Use docker to run CLRNet (recommended).
+We recommend to use docker for deployment. If you have not installed docker, see https://docs.docker.com/. 
+
+You can pull our pre-build docker image for convenience:
+```
+docker pull turoad/clrnet:torch1.13-tensorrt8.5
+```
+Another pre-build docker image is `turoad/clrnet:torch1.8-tensorrt7.2`.
+
+a. You can start the docker with:
+```
+./docker_scripts/docker_start.sh
+```
+**Note**, make sure your docker tag is modified in `docker_scripts/env.sh`.
+
+b. You can enter into the docker with:
+```
+./docker_scripts/docker_into.sh
+```
+This will create a new bash session in the container. 
+
+c. Build for CLRNet:
+```
+cd $CLRNET_ROOT
+python setup.py build develop
+```
+
 ### Data preparation
 
 #### CULane

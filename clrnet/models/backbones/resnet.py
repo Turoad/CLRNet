@@ -170,7 +170,8 @@ class ResNetWrapper(nn.Module):
         if out_conv:
             out_channel = 512
             for chan in reversed(self.in_channels):
-                if chan < 0: continue
+                if chan < 0:
+                    continue
                 out_channel = chan
                 break
             self.out = conv1x1(out_channel * self.model.expansion,
@@ -311,8 +312,6 @@ class ResNet(nn.Module):
 def _resnet(arch, block, layers, pretrained, progress, **kwargs):
     model = ResNet(block, layers, **kwargs)
     if pretrained:
-        print('pretrained model: ', model_urls[arch])
-        # state_dict = torch.load(model_urls[arch])['net']
         state_dict = load_state_dict_from_url(model_urls[arch])
         model.load_state_dict(state_dict, strict=False)
     return model
