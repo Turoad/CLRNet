@@ -37,6 +37,7 @@ Clone this code to your workspace.
 We call this directory as `$CLRNET_ROOT`
 ```Shell
 git clone https://github.com/Turoad/clrnet
+git submodule update --init --recursive
 ```
 
 ### Create a conda virtual environment and activate it (conda is optional)

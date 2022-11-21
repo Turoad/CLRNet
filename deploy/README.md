@@ -22,12 +22,14 @@ optional arguments:
 ```
 
 For example:
-```
+```shell
 python deploy/onnx/export_onnx.py --cfg configs/clrnet/clr_resnet18_culane.py \
                                   --load-from culane_r18.pth \
                                   --opset-version 16 \
                                   --out-file culane_r18.onnx
 ```
+
+if meet error, you can try to use lower opset-version, eg: when you use the provided trt7.2 version docker, you should set opset-version <= 12. 
 
 ## Export from ONNX to TensorRT
 
@@ -95,7 +97,7 @@ export ONNXRUNTIME_DIR=$(pwd)/onnxruntime-linux-x64-1.8.1
 ### Build the operator for ONNX and TensorRT
 ```
 cd /path of CLRNet/deploy/csrc/
-mkdir build
+mkdir build && cd build
 cmake ..
 make
 ```
