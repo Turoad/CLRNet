@@ -294,7 +294,7 @@ class CLRHead(nn.Module):
             # if the prediction does not start at the bottom of the image,
             # extend its prediction until the x is outside the image
             mask = ~((((lane_xs[:start] >= 0.) & (lane_xs[:start] <= 1.)
-                       ).cpu().numpy()[::-1].cumprod()[::-1]).astype(np.bool))
+                       ).cpu().numpy()[::-1].cumprod()[::-1]).astype(np.bool_))
             lane_xs[end + 1:] = -2
             lane_xs[:start][mask] = -2
             lane_ys = self.prior_ys[lane_xs >= 0]

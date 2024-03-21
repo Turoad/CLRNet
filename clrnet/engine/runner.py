@@ -2,7 +2,7 @@ import time
 import cv2
 import torch
 from tqdm import tqdm
-import pytorch_warmup as warmup
+# import pytorch_warmup as warmup
 import numpy as np
 import random
 import os
@@ -26,7 +26,8 @@ class Runner(object):
         self.recorder = build_recorder(self.cfg)
         self.net = build_net(self.cfg)
         self.net = MMDataParallel(self.net,
-                                  device_ids=range(self.cfg.gpus)).cuda()
+                                device_ids=range(self.cfg.gpus)).cuda()
+        # self.net = self.net.cuda()
         self.recorder.logger.info('Network: \n' + str(self.net))
         self.resume()
         self.optimizer = build_optimizer(self.cfg, self.net)
@@ -114,6 +115,7 @@ class Runner(object):
             with torch.no_grad():
                 output = self.net(data)
                 output = self.net.module.heads.get_lanes(output)
+                # output = self.net.heads.get_lanes(output)
                 predictions.extend(output)
             if self.cfg.view:
                 self.test_loader.dataset.view(output, data['meta'])
